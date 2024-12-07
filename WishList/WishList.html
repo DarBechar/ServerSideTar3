@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../StyleSheet.css" />
+
+    <script src="../AjaxCall.js"></script>
+
+    <script src="./WishListRender.js"></script>
+    <script src="./Filter.js"></script>
+
+    <style>
+      .input-group {
+        margin: auto;
+        padding: 5px;
+        max-width: 1200px;
+      }
+    </style>
+
+    <title>WishList</title>
+  </head>
+  <body>
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="../HomePage/index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="../WishList/WishList.html">WishList</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../Cast/Cast.Html">Cast</a>
+      </li>
+    </ul>
+
+    <div style="margin-top: 20px" class="input-group mb-3">
+      <input
+        id="RatingInput"
+        type="number"
+        class="form-control"
+        placeholder="Rating"
+        aria-label="Rating"
+        aria-describedby="button-addon2"
+        min="0"
+        max="10"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-outline-info" type="button" id="RatingBtn">
+          Filter
+        </button>
+      </div>
+    </div>
+
+    <div class="input-group mb-3">
+      <input
+        id="DurationInput"
+        type="text"
+        class="form-control"
+        placeholder="Duration"
+        aria-label="Duration"
+        aria-describedby="button-addon2"
+        min="0"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-outline-info" type="button" id="DurationBtn">
+          Duration
+        </button>
+      </div>
+    </div>
+
+    <div id="phWish"></div>
+  </body>
+</html>
