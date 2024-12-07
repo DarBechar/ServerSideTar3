@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../AjaxCall.js"></script>
+    <link rel="stylesheet" href="../StyleSheet.css" />
+    <script src="../Cast/Cast.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cast</title>
+  </head>
+  <body style="background-color: white;">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="../HomePage/index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../WishList/WishList.html">WishList</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="../Cast/Cast.Html">Cast</a>
+      </li>
+    </ul>
+<div id="AddCastDiv">
+    <h3 id="castH">Add A Cast Member</h3>
+
+    <form id="CastForm">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputID">ID</label>
+          <input type="number" class="form-control" id="inputID" required min="1" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputName"
+            placeholder="Actor Name"
+            required
+
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Role</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputRole"
+          placeholder="Role"
+        />
+      </div>
+      <div class="form-row">
+
+      <div class="form-group col-md-6">
+        <label for="inputAddress2">Date Of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          id="inputBirthDate"
+          placeholder="12/12/2012"
+          required
+
+        />
+      </div>
+        <div class="form-group col-md-6">
+          <label for="inputCity">Country</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputCountry"
+            placeholder="Israel"
+            required
+          />
+        </div>
+      <button id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+    <div id="phCast"></div>
+  </body>
+</html>
