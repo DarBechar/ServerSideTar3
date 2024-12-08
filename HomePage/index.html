@@ -30,16 +30,23 @@
     <title>Films</title>
   </head>
   <body>
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link active" href="./index.html">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../WishList/WishList.html">WishList</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../Cast/Cast.Html">Cast</a>
-      </li>
+    <ul class="nav d-flex justify-content-between w-100">
+      <div class="d-flex">
+        <li class="nav-item">
+          <a class="nav-link active" href="./index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../WishList/WishList.html">WishList</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Cast/Cast.Html">Cast</a>
+        </li>
+      </div>
+      <div class="d-flex align-items-center">
+        <li class="nav-item" id="userSection">
+          <!-- This will be populated by JavaScript -->
+        </li>
+      </div>
     </ul>
     <div id="ph"></div>
   </body>

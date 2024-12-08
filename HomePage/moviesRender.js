@@ -3,13 +3,24 @@
 const API = "https://localhost:7295/api/Movies";
 
 $(document).ready(() => {
-  if (!localStorage.getItem("isLoggedIn")) {
+  if (localStorage.getItem("isLoggedIn") != "true") {
     window.location.href = "../HomePage/Login.html";
     return;
   } else {
     console.log("logged");
-
     ajaxCall("GET", API, null, successCallBack, errorCallBack);
+
+    const userSection = $("#userSection");
+    const UserData = JSON.parse(localStorage.getItem("UserData"));
+
+    const username = UserData.username || "User"; // Get username if stored
+
+    userSection.html(`
+      <div class="d-flex align-items-center">
+        <span class="nav-link">Welcome, ${username}</span>
+        <a class="nav-link text-danger" href="#" onclick="logout()">Logout</a>
+      </div>
+    `);
   }
 });
 
@@ -107,3 +118,9 @@ const successCallBack = (data) => {
 const errorCallBack = (err) => {
   console.log("Error:", err.responseJSON || err.statusText);
 };
+
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("username"); // If you stored username
+  window.location.href = "../HomePage/Login.html";
+}

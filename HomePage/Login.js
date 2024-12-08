@@ -1,6 +1,11 @@
 const LoginAPI = "https://localhost:7295/api/User/api/User/Login";
 
 $(document).ready(() => {
+  if (localStorage.getItem("isLoggedIn") == "true") {
+    console.log("logged");
+    window.location.href = "../HomePage/index.html";
+    return;
+  }
   var myModal = new bootstrap.Modal(document.getElementById("loginModal"), {
     backdrop: "static",
     keyboard: false,
@@ -38,7 +43,13 @@ function toggleForms(formType) {
 }
 
 const successCB = (data) => {
+  console.log("Raw data:", data);
+  console.log("Username:", data.username);
   localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("UserData", JSON.stringify(data));
+
+  localStorage.setItem("UserName", toString(data.UserName));
+
   // Show success message
   $("#loginAlert")
     .removeClass("alert-danger")
