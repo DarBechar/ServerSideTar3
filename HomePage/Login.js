@@ -54,7 +54,7 @@ const successCB = (data) => {
   $("#loginAlert")
     .removeClass("alert-danger")
     .addClass("alert-success")
-    .text(data)
+    .text("Succesfully Logged In")
     .removeClass("d-none");
 
   // Close modal using Bootstrap's native JavaScript
