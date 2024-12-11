@@ -61,37 +61,12 @@ const render = (movies) => {
 };
 
 function Post(id) {
-  const movieId = parseInt(id);
-  const movie = movies1.find((m) => m.id === movieId);
-
-  if (!movie) {
-    console.error("Movie not found");
-    return;
-  }
+  let CurrUserid = UserData.userId;
 
   const movieData = {
-    id: movie.id,
-    title: movie.title,
-    rating: movie.rating,
-    income: movie.income,
-    releaseYear: movie.releaseYear,
-    duration: movie.duration,
-    language: movie.language,
-    description: movie.description,
-    genre: movie.genre,
-    photoUrl: movie.photoUrl,
+    MovieId: parseInt(id),
+    UserId: CurrUserid,
   };
-  console.log("About to send this data:", movieData);
-  console.log("To this URL:", API);
-  console.log("Full URL being used:", `${API}`);
-
-  // ajaxCall(
-  //   "POST",
-  //   API,
-  //   JSON.stringify(movieData),
-  //   successCallBack,
-  //   errorCallBack
-  // );
 
   ajaxCall(
     "POST",

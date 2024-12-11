@@ -43,13 +43,8 @@ function toggleForms(formType) {
 }
 
 const successCB = (data) => {
-  console.log("Raw data:", data);
-  console.log("Username:", data.username);
   localStorage.setItem("isLoggedIn", "true");
   localStorage.setItem("UserData", JSON.stringify(data));
-
-  localStorage.setItem("UserName", toString(data.UserName));
-
   // Show success message
   $("#loginAlert")
     .removeClass("alert-danger")
