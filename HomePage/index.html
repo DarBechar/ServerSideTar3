@@ -43,11 +43,181 @@
         </li>
       </div>
       <div class="d-flex align-items-center">
-        <li class="nav-item" id="userSection">
-          <!-- This will be populated by JavaScript -->
-        </li>
+        <li class="nav-item" id="userSection"></li>
       </div>
     </ul>
+
+    <div class="container-fluid mt-4">
+      <button
+        class="btn btn-primary mb-3"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#movieFormCollapse"
+        aria-expanded="false"
+        aria-controls="movieFormCollapse"
+      >
+        Add New Movie <i class="bi bi-chevron-down"></i>
+      </button>
+
+      <div class="collapse" id="movieFormCollapse">
+        <div class="card card-body mb-3">
+          <form class="row g-3 needs-validation" novalidate id="MovieForm">
+            <div class="col-md-6 mb-4">
+              <label for="inputTitle" class="form-label">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputTitle"
+                required
+                maxlength="50"
+                placeholder="Movie Title"
+              />
+              <div class="invalid-feedback">
+                Please provide the movie title.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="inputRating" class="form-label">Rating</label>
+              <input
+                type="number"
+                class="form-control"
+                id="inputRating"
+                required
+                min="0"
+                max="10"
+                step="0.1"
+                placeholder="0.0 - 10.0"
+              />
+              <div class="invalid-feedback">
+                Please provide a rating between 0 and 10.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="inputIncome" class="form-label">Income ($)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="inputIncome"
+                required
+                min="0"
+                placeholder="Box Office Income"
+              />
+              <div class="invalid-feedback">
+                Please provide the box office income.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="inputReleaseYear" class="form-label"
+                >Release Year</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="inputReleaseYear"
+                required
+                min="1900"
+                max="2024"
+                placeholder="YYYY"
+              />
+              <div class="invalid-feedback">
+                Please provide a valid release year.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="inputDuration" class="form-label"
+                >Duration (minutes)</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="inputDuration"
+                required
+                min="1"
+                max="255"
+                placeholder="Movie duration in minutes"
+              />
+              <div class="invalid-feedback">
+                Please provide the movie duration in minutes.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="inputLanguage" class="form-label">Language</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputLanguage"
+                required
+                maxlength="50"
+                placeholder="Movie Language"
+              />
+              <div class="invalid-feedback">
+                Please provide the movie language.
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-4">
+              <label for="inputDescription" class="form-label"
+                >Description</label
+              >
+              <textarea
+                class="form-control"
+                id="inputDescription"
+                required
+                maxlength="500"
+                rows="3"
+                placeholder="Movie Description"
+              ></textarea>
+              <div class="invalid-feedback">
+                Please provide a movie description.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="inputGenre" class="form-label">Genre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputGenre"
+                required
+                maxlength="30"
+                placeholder="Movie Genre"
+              />
+              <div class="invalid-feedback">
+                Please provide the movie genre.
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="inputPhotoURL" class="form-label">Photo URL</label>
+              <input
+                type="url"
+                class="form-control"
+                id="inputPhotoURL"
+                required
+                pattern="https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$"
+                placeholder="https://example.com/photo.jpg"
+              />
+              <div class="invalid-feedback">
+                Please provide a valid image URL (must end with .jpg, .jpeg,
+                .png, .gif, or .webp)
+              </div>
+            </div>
+
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit" id="submitBtn">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <div id="ph"></div>
   </body>
 </html>

@@ -3,11 +3,23 @@
 const API = "https://localhost:7295/api/Movies";
 
 $(document).ready(() => {
+  let userInfo = JSON.parse(localStorage.getItem("UserData"));
   if (localStorage.getItem("isLoggedIn") != "true") {
     window.location.href = "../HomePage/Login.html";
     return;
   } else {
     console.log("logged");
+    ajaxCall(
+      "GET",
+      "https://localhost:7295/api/User/wishList" + `/${userInfo.userId}`,
+      null,
+      (WishListData) => {
+        localStorage.setItem("WishListData", JSON.stringify(WishListData));
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
     ajaxCall("GET", API, null, successCallBack, errorCallBack);
 
     const userSection = $("#userSection");
@@ -17,17 +29,48 @@ $(document).ready(() => {
 
     userSection.html(`
       <div class="d-flex align-items-center">
-        <span class="nav-link">Welcome, ${username}</span>
-        <a class="nav-link text-danger" href="#" onclick="logout()">Logout</a>
+        <span class="nav-link">Welcome ${username}</span>
+        <a class="nav-link " href="#" onclick="logout()">Logout</a>
       </div>
     `);
   }
+
+  const form = document.querySelector(".needs-validation");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      event.stopPropagation();
+    } else {
+      const movie = {
+        title: $("#inputTitle").val(),
+        rating: parseFloat($("#inputRating").val()),
+        income: parseInt($("#inputIncome").val()),
+        releaseYear: parseInt($("#inputReleaseYear").val()),
+        duration: parseInt($("#inputDuration").val()),
+        language: $("#inputLanguage").val(),
+        description: $("#inputDescription").val(),
+        genre: $("#inputGenre").val(),
+        photoURL: $("#inputPhotoURL").val(),
+      };
+
+      AddMovie(movie);
+    }
+
+    form.classList.add("was-validated");
+  });
 });
 
 const render = (movies) => {
-  console.log(movies);
+  let wishList = JSON.parse(localStorage.getItem("WishListData"));
+  console.log(wishList);
+  // Create a Set of wishlist movie IDs for efficient lookup
+  const wishlistIds = new Set(wishList.map((movie) => movie.id));
   let str = "";
   for (let i = 0; i < movies.length; i++) {
+    const isInWishlist = wishlistIds.has(movies[i].id);
+
     str += `<div class="card-container">
       <div class="card position-relative">
        <div class="position-absolute top-0 end-0 m-2">
@@ -40,7 +83,11 @@ const render = (movies) => {
         <div class="card_info">
           <span class="card_category">${movies[i].language}</span>
           <h3 class="card_tittle">${movies[i].title}</h3>
-            <button id="${movies[i].id}" class="button" >Add To WishList</button>
+            <button ${isInWishlist ? "disabled" : ""} id="${
+      movies[i].id
+    }" class="button ${isInWishlist ? "disabled" : ""}" >${
+      isInWishlist ? "In Wishlist" : "Add To WishList"
+    }</button>
           </a>
         </div>
       </div>
@@ -51,39 +98,35 @@ const render = (movies) => {
 
   $(".button").click((e) => {
     console.log(e);
-    Post(e.target.id);
+    add2WishList(e.target.id);
     e.target.disabled = true;
     $(e.target)
       .removeClass("btn-primary")
-      .addClass("btn-secondary")
-      .text("Added to Wish List");
+      .addClass("disabled")
+      .text("In Wishlist");
   });
 };
 
-function Post(id) {
-  let CurrUserid = UserData.userId;
-
-  const movieData = {
-    MovieId: parseInt(id),
-    UserId: CurrUserid,
-  };
+function add2WishList(id) {
+  let CurrUser = JSON.parse(localStorage.getItem("UserData"));
 
   ajaxCall(
     "POST",
-    API,
-    JSON.stringify(movieData),
-    (data) => {
-      console.log("Full server response:", data);
-      console.log("Response type:", typeof data);
-      console.log("Response status:", "Success");
-    },
-    (err) => {
-      console.log("Error object:", err);
-      console.log("Error status:", err.status);
-      console.log("Error message:", err.responseText);
-    }
+    `https://localhost:7295/api/User/WishList/${CurrUser.userId}/${id}`,
+    null,
+    Add2WishListSuccessCB,
+    Add2WishListErrorCB
   );
 }
+
+const Add2WishListSuccessCB = (data) => {
+  console.log(data);
+  console.log("success");
+};
+
+const Add2WishListErrorCB = (err) => {
+  console.log(err);
+};
 
 const successCallBack = (data) => {
   console.log("Success:", data);
@@ -99,3 +142,7 @@ function logout() {
   localStorage.removeItem("username"); // If you stored username
   window.location.href = "../HomePage/Login.html";
 }
+
+const AddMovie = (movie) => {
+  ajaxCall("POST", API, JSON.stringify(movie), successCallBack, errorCallBack);
+};
