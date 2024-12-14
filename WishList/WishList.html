@@ -46,38 +46,49 @@
       </div>
     </ul>
 
-    <div style="margin-top: 20px" class="input-group mb-3">
-      <input
-        id="RatingInput"
-        type="number"
-        class="form-control"
-        placeholder="Rating"
-        aria-label="Rating"
-        aria-describedby="button-addon2"
-        min="0"
-        max="10"
-      />
-      <div class="input-group-append">
-        <button class="btn btn-outline-info" type="button" id="RatingBtn">
-          Filter
-        </button>
+    <div class="container">
+      <div class="form-group" style="max-width: 1200px; margin: auto">
+        <label for="RatingInput" class="d-block mb-2">Filter by Rating</label>
+        <div class="input-group">
+          <input
+            id="RatingInput"
+            type="number"
+            class="form-control"
+            placeholder="rating higher than..."
+            aria-label="Rating"
+            aria-describedby="button-addon2"
+            min="0"
+            max="10"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-info" type="button" id="RatingBtn">
+              Filter
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="input-group mb-3">
-      <input
-        id="DurationInput"
-        type="text"
-        class="form-control"
-        placeholder="Duration"
-        aria-label="Duration"
-        aria-describedby="button-addon2"
-        min="0"
-      />
-      <div class="input-group-append">
-        <button class="btn btn-outline-info" type="button" id="DurationBtn">
-          Duration
-        </button>
+      <!-- Duration Filter -->
+      <div class="form-group" style="max-width: 1200px; margin: auto">
+        <label for="DurationInput" class="d-block mb-2"
+          >Filter by Duration</label
+        >
+        <div class="input-group">
+          <input
+            id="DurationInput"
+            type="text"
+            class="form-control"
+            placeholder="Duration lower than..."
+            aria-label="Duration"
+            aria-describedby="button-addon2"
+            min="0"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-info" type="button" id="DurationBtn">
+              Filter
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
