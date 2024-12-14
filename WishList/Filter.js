@@ -16,7 +16,7 @@ $(document).ready(() => {
 
   $("#DurationBtn").click(() => {
     let duration = $("#DurationInput").val();
-    let apiDuration = `https://localhost:7295/api/Movies/duration/${duration}`;
+    let apiDuration = `https://localhost:7295/api/Movies/duration?duration=${duration}`;
     $.ajax({
       type: "GET",
       url: apiDuration,

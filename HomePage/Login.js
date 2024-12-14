@@ -1,6 +1,7 @@
-const LoginAPI = "https://localhost:7295/api/User/api/User/Login";
+const LoginAPI = "https://localhost:7295/api/User/Login";
 
 $(document).ready(() => {
+  //checking if the user is logged in. if he is refering to homepage, if not showing the login modal
   if (localStorage.getItem("isLoggedIn") == "true") {
     console.log("logged");
     window.location.href = "../HomePage/index.html";
@@ -11,6 +12,8 @@ $(document).ready(() => {
     keyboard: false,
   });
   myModal.show();
+
+  //handling the login form submition
 
   $("#loginFormSubmit").submit((event) => {
     event.preventDefault();
@@ -23,6 +26,68 @@ $(document).ready(() => {
     console.log(user);
     ajaxCall("POST", LoginAPI, JSON.stringify(user), successCB, errorCB);
   });
+
+  //validation that password match
+  $("#confirmPassword").on("input", function () {
+    const password = $("#registerPassword").val();
+    const confirmPassword = $(this).val();
+
+    if (password !== confirmPassword) {
+      $(this).addClass("is-invalid");
+      $(this).removeClass("is-valid");
+    } else {
+      $(this).addClass("is-valid");
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  //validating email input
+
+  $("#registerEmail").on("input", function () {
+    const email = $(this).val();
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (emailPattern.test(email)) {
+      $(this).addClass("is-valid");
+      $(this).removeClass("is-invalid");
+    } else {
+      $(this).addClass("is-invalid");
+      $(this).removeClass("is-valid");
+    }
+  });
+
+  //handling the register form submition
+
+  $("#registerFormSubmit").submit((event) => {
+    event.preventDefault();
+    const user = {
+      id: 0,
+      UserName: $("#registerUsername").val(),
+      Email: $("#registerEmail").val(),
+      password: $("#registerPassword").val(),
+    };
+    console.log(user);
+
+    $.ajax({
+      type: "POST",
+      url: "https://localhost:7295/api/User/Register",
+      data: JSON.stringify(user),
+      cache: false,
+      contentType: "application/json",
+      dataType: "json",
+      success: (response) => {
+        console.log("Raw success response:", response);
+        successCB(response);
+      },
+      error: (error) => {
+        errorCB(error);
+      },
+    });
+  });
+
+  //wiring the toggle between login and register
+  $("#showRegister").click(() => toggleForms("register"));
+  $("#showLogin").click(() => toggleForms("login"));
 });
 
 // Toggle between login and register forms
@@ -64,5 +129,12 @@ const successCB = (data) => {
 };
 
 const errorCB = (err) => {
-  console.log("Error:", err.responseJSON || err.statusText);
+  $("#loginAlert")
+    .removeClass("alert-success")
+    .addClass("alert-danger")
+    .text("Login failed. Please check your username and password.")
+    .removeClass("d-none");
+  console.log("Full error:", err);
+  console.log("Status:", err.status);
+  console.log("Response Text:", err.responseText);
 };

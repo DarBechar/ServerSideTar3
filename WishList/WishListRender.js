@@ -13,6 +13,19 @@ $(document).ready(() => {
     successCallBack,
     errorCallBack
   );
+
+  //handling the user section in the menu
+  const userSection = $("#userSection");
+  const UserData = JSON.parse(localStorage.getItem("UserData"));
+
+  const username = UserData.username || "User"; // Get username if stored
+
+  userSection.html(`
+    <div class="d-flex align-items-center">
+      <span class="nav-link">Welcome ${username}</span>
+      <a class="nav-link " href="#" onclick="logout()">Logout</a>
+    </div>
+  `);
 });
 
 const render = (mPackage) => {
@@ -46,3 +59,8 @@ const successCallBack = (mPackage) => {
 const errorCallBack = (err) => {
   console.log("Error:", err.responseJSON || err.statusText);
 };
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "../HomePage/Login.html";
+}

@@ -5,6 +5,19 @@ $(document).ready(() => {
 
   ajaxCall("GET", API, null, GetSuccessCallBack, errorCallBack);
 
+  //handling the user section in the menu
+  const userSection = $("#userSection");
+  const UserData = JSON.parse(localStorage.getItem("UserData"));
+
+  const username = UserData.username || "User"; // Get username if stored
+
+  userSection.html(`
+     <div class="d-flex align-items-center">
+       <span class="nav-link">Welcome ${username}</span>
+       <a class="nav-link " href="#" onclick="logout()">Logout</a>
+     </div>
+   `);
+
   // Form validation
   const form = document.querySelector(".needs-validation");
 
@@ -58,7 +71,7 @@ const GetSuccessCallBack = (CastJson) => {
      </div>
      <img src="${CastJson[index].photoURL}" alt="my-pic" class="card_img"/>
         <div class="card_info">
-          <span class="card_category">Role: ${CastJson[index].role}</span>
+          <span class="card_category">${CastJson[index].role}</span>
           <h3 class="card_tittle">${CastJson[index].name}</h3>
           <span class="card_category">${CastJson[index].country}</span>
         </div>
@@ -67,3 +80,9 @@ const GetSuccessCallBack = (CastJson) => {
   }
   $("#phCast").html(str);
 };
+
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "../HomePage/Login.html";
+}

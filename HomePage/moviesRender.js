@@ -3,25 +3,14 @@
 const API = "https://localhost:7295/api/Movies";
 
 $(document).ready(() => {
-  let userInfo = JSON.parse(localStorage.getItem("UserData"));
+  //checking if the user is loggeed in or not.
   if (localStorage.getItem("isLoggedIn") != "true") {
     window.location.href = "../HomePage/Login.html";
     return;
   } else {
-    console.log("logged");
-    ajaxCall(
-      "GET",
-      "https://localhost:7295/api/User/wishList" + `/${userInfo.userId}`,
-      null,
-      (WishListData) => {
-        localStorage.setItem("WishListData", JSON.stringify(WishListData));
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    ajaxCall("GET", API, null, successCallBack, errorCallBack);
+    init();
 
+    //handling the user section in the menu
     const userSection = $("#userSection");
     const UserData = JSON.parse(localStorage.getItem("UserData"));
 
@@ -35,6 +24,7 @@ $(document).ready(() => {
     `);
   }
 
+  //Handling the Add Movie Form
   const form = document.querySelector(".needs-validation");
 
   form.addEventListener("submit", function (event) {
@@ -54,16 +44,34 @@ $(document).ready(() => {
         genre: $("#inputGenre").val(),
         photoURL: $("#inputPhotoURL").val(),
       };
-
+      console.log("Log movie" + movie);
       AddMovie(movie);
+      clearForm();
     }
 
     form.classList.add("was-validated");
   });
 });
 
+const init = () => {
+  let userInfo = JSON.parse(localStorage.getItem("UserData"));
+
+  ajaxCall(
+    "GET",
+    "https://localhost:7295/api/User/wishList" + `/${userInfo.userId}`,
+    null,
+    (WishListData) => {
+      localStorage.setItem("WishListData", JSON.stringify(WishListData));
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+  ajaxCall("GET", API, null, successCallBack, errorCallBack);
+};
+
 const render = (movies) => {
-  let wishList = JSON.parse(localStorage.getItem("WishListData"));
+  let wishList = JSON.parse(localStorage.getItem("WishListData")) || [];
   console.log(wishList);
   // Create a Set of wishlist movie IDs for efficient lookup
   const wishlistIds = new Set(wishList.map((movie) => movie.id));
@@ -138,11 +146,25 @@ const errorCallBack = (err) => {
 };
 
 function logout() {
-  localStorage.removeItem("isLoggedIn");
-  localStorage.removeItem("username"); // If you stored username
+  localStorage.clear();
   window.location.href = "../HomePage/Login.html";
 }
+const addMovieSuccess = (data) => {
+  init();
+};
 
 const AddMovie = (movie) => {
-  ajaxCall("POST", API, JSON.stringify(movie), successCallBack, errorCallBack);
+  ajaxCall("POST", API, JSON.stringify(movie), addMovieSuccess, errorCallBack);
 };
+
+const clearForm=()=>{
+  $("#inputTitle").val()="";
+  $("#inputRating").val()="";
+       $("#inputIncome").val()="";
+        $("#inputReleaseYear").val()="";
+        $("#inputDuration").val()="";
+       $("#inputLanguage").val()="";
+         $("#inputDescription").val()="";
+    $("#inputGenre").val()="";
+       $("#inputPhotoURL").val()="";
+}

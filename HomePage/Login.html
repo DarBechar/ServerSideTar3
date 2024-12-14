@@ -122,15 +122,6 @@
               </div>
               <form id="registerFormSubmit">
                 <div class="mb-3">
-                  <label for="registerName" class="form-label">Full Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="registerName"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
                   <label for="registerUsername" class="form-label"
                     >Username</label
                   >
@@ -154,6 +145,10 @@
                     required
                   />
                 </div>
+                <div class="invalid-feedback">
+                  Please enter a valid email address (example@domain.com)
+                </div>
+                <div class="valid-feedback">Valid email format!</div>
                 <div class="mb-3">
                   <label for="registerPassword" class="form-label"
                     >Password</label
@@ -176,6 +171,8 @@
                     required
                   />
                 </div>
+                <div class="invalid-feedback">Passwords do not match</div>
+                <div class="valid-feedback">Passwords match!</div>
                 <div class="d-grid gap-2">
                   <button type="submit" class="btn btn-primary">
                     Register

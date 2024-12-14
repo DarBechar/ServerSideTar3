@@ -73,6 +73,11 @@ body {
   font-weight: 500;
   color: #868686;
   background-color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  font-size: calc(4px + 1vw);
 }
 
 .card_tittle {
@@ -85,7 +90,6 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  /* Use calc() to make font size relative to card width */
   font-size: calc(8px + 1vw);
 }
 
