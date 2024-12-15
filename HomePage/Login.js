@@ -111,6 +111,7 @@ const successCB = (data) => {
   localStorage.setItem("isLoggedIn", "true");
   localStorage.setItem("UserData", JSON.stringify(data));
   // Show success message
+  console.log(data.message);
   $("#loginAlert")
     .removeClass("alert-danger")
     .addClass("alert-success")
@@ -132,7 +133,13 @@ const errorCB = (err) => {
   $("#loginAlert")
     .removeClass("alert-success")
     .addClass("alert-danger")
-    .text("Login failed. Please check your username and password.")
+    .text(err.responseText)
+    .removeClass("d-none");
+
+  $("#registerAlert")
+    .removeClass("alert-success")
+    .addClass("alert-danger")
+    .text(err.responseText)
     .removeClass("d-none");
   console.log("Full error:", err);
   console.log("Status:", err.status);
