@@ -1,7 +1,7 @@
 $(document).ready(() => {
   $("#RatingBtn").click(() => {
     let rating = $("#RatingInput").val();
-    let apiRating = `https://localhost:7295/api/Movies/Rating/${rating}`;
+    let apiRating = `https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies/Rating/${rating}`;
     $.ajax({
       type: "GET",
       url: apiRating,
@@ -16,7 +16,7 @@ $(document).ready(() => {
 
   $("#DurationBtn").click(() => {
     let duration = $("#DurationInput").val();
-    let apiDuration = `https://localhost:7295/api/Movies/duration?duration=${duration}`;
+    let apiDuration = `https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies/duration?duration=${duration}`;
     $.ajax({
       type: "GET",
       url: apiDuration,

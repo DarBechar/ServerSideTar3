@@ -1,4 +1,4 @@
-const API = "https://localhost:7295/api/Cast";
+const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Cast";
 
 $(document).ready(() => {
   console.log("logged");

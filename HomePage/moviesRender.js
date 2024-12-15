@@ -1,6 +1,4 @@
-// const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies";
-
-const API = "https://localhost:7295/api/Movies";
+const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies";
 
 $(document).ready(() => {
   //checking if the user is loggeed in or not.
@@ -58,7 +56,7 @@ const init = () => {
 
   ajaxCall(
     "GET",
-    "https://localhost:7295/api/User/wishList" + `/${userInfo.userId}`,
+    "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList" + `/${userInfo.userId}`,
     null,
     (WishListData) => {
       localStorage.setItem("WishListData", JSON.stringify(WishListData));
@@ -120,7 +118,7 @@ function add2WishList(id) {
 
   ajaxCall(
     "POST",
-    `https://localhost:7295/api/User/WishList/${CurrUser.userId}/${id}`,
+    `https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList/${CurrUser.userId}/${id}`,
     null,
     Add2WishListSuccessCB,
     Add2WishListErrorCB

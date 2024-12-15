@@ -1,4 +1,4 @@
-const LoginAPI = "https://localhost:7295/api/User/Login";
+const LoginAPI = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/Login";
 
 $(document).ready(() => {
   //checking if the user is logged in. if he is refering to homepage, if not showing the login modal
@@ -70,7 +70,7 @@ $(document).ready(() => {
 
     $.ajax({
       type: "POST",
-      url: "https://localhost:7295/api/User/Register",
+      url: "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/Register",
       data: JSON.stringify(user),
       cache: false,
       contentType: "application/json",
