@@ -1,5 +1,7 @@
 const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Cast";
 
+// const API = "https://localhost:7295/api/Cast";
+
 $(document).ready(() => {
   console.log("logged");
 
@@ -31,8 +33,8 @@ $(document).ready(() => {
       const castMember = {
         name: $("#inputName").val(),
         role: $("#inputRole").val(),
-        DateOfBirth: $("#inputBirthDate").val(),
-        Country: $("#inputCountry").val(),
+        dateOfBirth: $("#inputBirthDate").val(),
+        country: $("#inputCountry").val(),
         photoURL: $("#inputPhotoURL").val(),
       };
 
@@ -54,10 +56,26 @@ const post = (castMember) => {
 };
 
 const PostSuccessCallBack = (CastPack) => {
+  // Reset form
+  document.querySelector(".needs-validation").reset();
+  // Remove validation classes
+  $(".needs-validation").removeClass("was-validated");
+
+  // Refresh the cast list
   ajaxCall("GET", API, null, GetSuccessCallBack, errorCallBack);
+
+  // Hide alert after 3 seconds
+  setTimeout(() => {
+    $("#ActorALert").addClass("d-none");
+  }, 3000);
 };
 
 const errorCallBack = (err) => {
+  $("#ActorALert")
+    .removeClass("alert-success")
+    .addClass("alert-danger")
+    .text(err.responseText)
+    .removeClass("d-none");
   console.log("Error:", err.responseJSON || err.statusText);
 };
 
@@ -80,7 +98,6 @@ const GetSuccessCallBack = (CastJson) => {
   }
   $("#phCast").html(str);
 };
-
 
 function logout() {
   localStorage.clear();

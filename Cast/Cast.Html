@@ -47,6 +47,9 @@
           />
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please provide the actor's name.</div>
+          <div id="ActorALert" class="alert alert-danger d-none" role="alert">
+            Invalid Actor Details. Please try again.
+          </div>
         </div>
 
         <div class="col-md-6 mb-4">
@@ -57,7 +60,7 @@
             id="inputRole"
             placeholder="Enter: actor, director, or producer"
             required
-            pattern="(?i)actor|director|producer"
+            pattern="[Aa][Cc][Tt][Oo][Rr]|[Dd][Ii][Rr][Ee][Cc][Tt][Oo][Rr]|[Pp][Rr][Oo][Dd][Uu][Cc][Ee][Rr]"
           />
           <div class="invalid-feedback">
             Role must be either 'actor', 'director', or 'producer'

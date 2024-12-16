@@ -1,5 +1,11 @@
 const LoginAPI = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/Login";
 
+// const LoginAPI = "https://localhost:7295/api/User/Login";
+
+const RegisterApi="https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/Register";
+
+// const RegisterApi = "https://localhost:7295/api/User/Register";
+
 $(document).ready(() => {
   //checking if the user is logged in. if he is refering to homepage, if not showing the login modal
   if (localStorage.getItem("isLoggedIn") == "true") {
@@ -70,7 +76,7 @@ $(document).ready(() => {
 
     $.ajax({
       type: "POST",
-      url: "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/Register",
+      url: RegisterApi,
       data: JSON.stringify(user),
       cache: false,
       contentType: "application/json",

@@ -1,4 +1,10 @@
 const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies";
+const WishListAPI =
+  "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
+
+// const API = "https://localhost:7295/api/Movies";
+
+// const WishListAPI = "https://localhost:7295/api/User/wishList";
 
 $(document).ready(() => {
   //checking if the user is loggeed in or not.
@@ -30,6 +36,7 @@ $(document).ready(() => {
 
     if (!form.checkValidity()) {
       event.stopPropagation();
+      form.classList.add("was-validated");
     } else {
       const movie = {
         title: $("#inputTitle").val(),
@@ -46,8 +53,6 @@ $(document).ready(() => {
       AddMovie(movie);
       clearForm();
     }
-
-    form.classList.add("was-validated");
   });
 });
 
@@ -56,7 +61,7 @@ const init = () => {
 
   ajaxCall(
     "GET",
-    "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList" + `/${userInfo.userId}`,
+    WishListAPI + `/${userInfo.userId}`,
     null,
     (WishListData) => {
       localStorage.setItem("WishListData", JSON.stringify(WishListData));
@@ -118,7 +123,7 @@ function add2WishList(id) {
 
   ajaxCall(
     "POST",
-    `https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList/${CurrUser.userId}/${id}`,
+    WishListAPI + `${CurrUser.userId}/${id}`,
     null,
     Add2WishListSuccessCB,
     Add2WishListErrorCB
@@ -155,14 +160,18 @@ const AddMovie = (movie) => {
   ajaxCall("POST", API, JSON.stringify(movie), addMovieSuccess, errorCallBack);
 };
 
-const clearForm=()=>{
-  $("#inputTitle").val()="";
-  $("#inputRating").val()="";
-       $("#inputIncome").val()="";
-        $("#inputReleaseYear").val()="";
-        $("#inputDuration").val()="";
-       $("#inputLanguage").val()="";
-         $("#inputDescription").val()="";
-    $("#inputGenre").val()="";
-       $("#inputPhotoURL").val()="";
-}
+const clearForm = () => {
+  $("#movieAlert")
+    .removeClass("d-none alert-danger")
+    .addClass("alert-success")
+    .text("Movie added successfully!")
+    .show();
+
+  // Reset form and validation state
+  const form = document.querySelector(".needs-validation");
+  setTimeout(() => {
+    form.reset();
+    form.classList.remove("was-validated");
+    $("#movieAlert").addClass("d-none");
+  }, 100);
+};

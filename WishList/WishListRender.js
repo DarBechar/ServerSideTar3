@@ -1,4 +1,7 @@
 const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
+
+// const API = "https://localhost:7295/api/User/wishList";
+
 const userinfo = JSON.parse(localStorage.getItem("UserData"));
 
 let wishList;
