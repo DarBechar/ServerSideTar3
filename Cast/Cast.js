@@ -14,11 +14,16 @@ $(document).ready(() => {
   const username = UserData.username || "User"; // Get username if stored
 
   userSection.html(`
-     <div class="d-flex align-items-center">
-       <span class="nav-link">Welcome ${username}</span>
-       <a class="nav-link " href="#" onclick="logout()">Logout</a>
-     </div>
-   `);
+    <div class="d-flex align-items-center">
+      <span class="nav-link">Welcome ${username}</span>
+      ${
+        username == "admin"
+          ? `<a class="nav-link " href="../admin.html">Console</a>`
+          : ""
+      }
+      <a class="nav-link " href="#" onclick="logout()">Logout</a>
+    </div>
+  `);
 
   // Form validation
   const form = document.querySelector(".needs-validation");

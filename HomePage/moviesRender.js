@@ -1,10 +1,10 @@
-const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies";
-const WishListAPI =
-  "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
+// const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies";
+// const WishListAPI =
+//   "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
 
-// const API = "https://localhost:7295/api/Movies";
+const API = "https://localhost:7295/api/Movies";
 
-// const WishListAPI = "https://localhost:7295/api/User/wishList";
+const WishListAPI = "https://localhost:7295/api/User/wishList";
 
 $(document).ready(() => {
   //checking if the user is loggeed in or not.
@@ -23,6 +23,11 @@ $(document).ready(() => {
     userSection.html(`
       <div class="d-flex align-items-center">
         <span class="nav-link">Welcome ${username}</span>
+        ${
+          username == "admin"
+            ? `<a class="nav-link " href="../admin/admin.html">Console</a>`
+            : ""
+        }
         <a class="nav-link " href="#" onclick="logout()">Logout</a>
       </div>
     `);
@@ -121,7 +126,7 @@ function add2WishList(id) {
 
   ajaxCall(
     "POST",
-    WishListAPI + `${CurrUser.userId}/${id}`,
+    WishListAPI + `/${CurrUser.userId}/${id}`,
     null,
     Add2WishListSuccessCB,
     Add2WishListErrorCB

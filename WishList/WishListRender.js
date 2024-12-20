@@ -23,6 +23,11 @@ $(document).ready(() => {
   userSection.html(`
     <div class="d-flex align-items-center">
       <span class="nav-link">Welcome ${username}</span>
+      ${
+        username == "admin"
+          ? `<a class="nav-link " href="../admin.html">Console</a>`
+          : ""
+      }
       <a class="nav-link " href="#" onclick="logout()">Logout</a>
     </div>
   `);
@@ -53,7 +58,20 @@ const render = (mPackage) => {
 };
 
 const successCallBack = (mPackage) => {
-  render(mPackage);
+  // render(mPackage);
+  console.log(mPackage.length);
+  if (mPackage.length == 0) {
+    let str = `<br /><br /><h3 style="color: gray; text-align: center">
+  Seems like your wish list is emty
+</h3>
+<br />
+<a href="../HomePage/index.html" style="text-align: center"
+  >Add movie here</a
+>`;
+    $("#phWish").html(str);
+  } else {
+    render(mPackage);
+  }
 };
 
 const removeSuccessCallBack = (mPackage) => {
