@@ -224,6 +224,56 @@
       </div>
     </div>
 
+    <div
+      class="modal fade"
+      id="castModal"
+      tabindex="-1"
+      aria-labelledby="castModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="castModalLabel">Manage Cast</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-6">
+                <h6>Current Cast</h6>
+                <ul id="currentCast" class="list-group">
+                  <!-- Current cast will be populated here -->
+                </ul>
+              </div>
+              <div class="col-6">
+                <h6>Available Actors</h6>
+                <ul id="availableActors" class="list-group">
+                  <!-- Available actors will be populated here -->
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="saveCastChanges">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="ph"></div>
   </body>
 </html>

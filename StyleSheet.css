@@ -112,6 +112,47 @@ button:hover {
   border-color: blue;
   color: white;
 }
+
+.button-remove {
+  padding: 5px 8px;
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #868686;
+  background-color: #fff;
+  outline: none;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.button-remove:hover {
+  background-color: red;
+  border-color: red;
+  color: white;
+}
+
+.add-cast-btn {
+  padding: 5px 8px;
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #868686;
+  background-color: #fff;
+  outline: none;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-cast-btn:hover {
+  background-color: blue;
+  border-color: blue;
+  color: white;
+}
 .disabled {
   color: white;
   background-color: grey;
@@ -163,4 +204,16 @@ button:hover {
 }
 .form-container {
   transition: all 0.3s ease;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.list-group {
+  max-height: 400px;
+  overflow-y: auto;
 }

@@ -75,7 +75,6 @@ const init = () => {
 
 const render = (movies) => {
   let wishList = JSON.parse(localStorage.getItem("WishListData")) || [];
-  console.log(wishList);
   // Create a Set of wishlist movie IDs for efficient lookup
   const wishlistIds = new Set(wishList.map((movie) => movie.id));
   let str = "";
@@ -97,9 +96,9 @@ const render = (movies) => {
             <button ${isInWishlist ? "disabled" : ""} id="${
       movies[i].id
     }" class="button ${isInWishlist ? "disabled" : ""}" >${
-      isInWishlist ? "In Wishlist" : "Add To WishList"
+      isInWishlist ? "In Wishlist" : "WishList"
     }</button>
-          </a>
+    <button class="add-cast-btn" data-movie-id="${movies[i].id}">Cast</button>
         </div>
       </div>
     </div>`;
@@ -108,7 +107,6 @@ const render = (movies) => {
   $("#ph").html(str);
 
   $(".button").click((e) => {
-    console.log(e);
     add2WishList(e.target.id);
     e.target.disabled = true;
     $(e.target)
@@ -140,7 +138,6 @@ const Add2WishListErrorCB = (err) => {
 };
 
 const successCallBack = (data) => {
-  console.log("Success:", data);
   render(data);
 };
 
@@ -175,3 +172,189 @@ const clearForm = () => {
     $("#movieAlert").addClass("d-none");
   }, 100);
 };
+
+// Handle "Add Cast" button click
+$(document).on("click", ".add-cast-btn", function () {
+  const castModal = new bootstrap.Modal(document.getElementById("castModal"));
+
+  const movieId = $(this).data("movie-id");
+
+  ajaxCall(
+    "GET",
+    `https://localhost:7295/api/Cast/${movieId}`,
+    null,
+    (response) => {
+      console.log(response);
+      const currentCast = response.filter(
+        (actor) => actor.listType === "current"
+      );
+      const availableActors = response.filter(
+        (actor) => actor.listType === "available"
+      );
+
+      renderCurrentCast(currentCast);
+      renderAvailableActors(availableActors);
+    },
+    errorCallBack
+  );
+
+  $("#saveCastChanges").click(function () {
+    console.log("Save button clicked"); // Debug if click is registered
+
+    const movieId = $("#castModal").data("movie-id");
+    console.log("Movie ID:", movieId); // Debug movie ID
+
+    const currentCastIds = $("#currentCast .remove-actor")
+      .map(function () {
+        return $(this).data("actor-id");
+      })
+      .get();
+    console.log("Current cast IDs:", currentCastIds); // Debug collected IDs
+
+    // Close the modal after saving
+    castModal.hide();
+  });
+
+  // Fetch current cast
+  // $.ajax({
+  //   url: `YOUR_API_ENDPOINT/movies/${movieId}/cast`,
+  //   method: "GET",
+  //   success: function (currentCast) {
+  //     renderCurrentCast(currentCast);
+  //   },
+  //   error: errorCallBack,
+  // });
+
+  // Fetch available actors
+  // $.ajax({
+  //   url: "YOUR_API_ENDPOINT/actors/available",
+  //   method: "GET",
+  //   success: function (availableActors) {
+  //     renderAvailableActors(availableActors);
+  //   },
+  //   error: errorCallBack,
+  // });
+
+  // Store movie ID in modal for later use
+  $("#castModal").data("movie-id", movieId);
+  castModal.show();
+});
+
+// Render current cast list
+function renderCurrentCast(cast) {
+  const castList = cast
+    .map(
+      (actor) => `
+     <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="${actor.photoURL}" alt="${actor.name}" 
+                     class="rounded-circle me-2" 
+                     style="width: 40px; height: 40px; object-fit: cover;">
+                <span>${actor.name}</span>
+            </div>
+            <button class="btn btn-sm btn-danger remove-actor" data-actor-id="${actor.id}">
+                Remove
+            </button>
+        </li>
+    `
+    )
+    .join("");
+
+  $("#currentCast").html(castList);
+}
+
+// Render available actors list
+function renderAvailableActors(actors) {
+  const availableList = actors
+    .map(
+      (actor) => `
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="${actor.photoURL}" alt="${actor.name}" 
+                     class="rounded-circle me-2" 
+                     style="width: 40px; height: 40px; object-fit: cover;">
+                <span>${actor.name}</span>
+            </div>
+            <button class="btn btn-sm btn-success add-actor" data-actor-id="${actor.id}">
+                Add
+            </button>
+        </li>
+    `
+    )
+    .join("");
+
+  $("#availableActors").html(availableList);
+}
+
+// Handle adding actor to cast
+$(document).on("click", ".add-actor", function () {
+  const actorId = $(this).data("actor-id");
+  const actorItem = $(this).closest("li");
+
+  // Move actor to current cast list
+  $("#currentCast").append(actorItem);
+  $(this)
+    .removeClass("btn-success add-actor")
+    .addClass("btn-danger remove-actor")
+    .text("Remove");
+});
+
+// Handle removing actor from cast
+$(document).on("click", ".remove-actor", function () {
+  const actorId = $(this).data("actor-id");
+  const actorItem = $(this).closest("li");
+
+  // Move actor back to available actors list
+  $("#availableActors").append(actorItem);
+  $(this)
+    .removeClass("btn-danger remove-actor")
+    .addClass("btn-success add-actor")
+    .text("Add");
+});
+
+// Handle saving changes
+$(document).on("click", "#saveCastChanges", function (e) {
+  e.preventDefault(); // Prevent any default form submission
+  console.log("Save button clicked - handler started");
+
+  const movieId = $("#castModal").data("movie-id");
+
+  const currentCastIds = $("#currentCast .remove-actor")
+    .map(function () {
+      return $(this).data("actor-id");
+    })
+    .get();
+
+  $.ajax({
+    url: `https://localhost:7295/api/Movies/DeleteCast/${movieId}`,
+    method: "DELETE",
+    contentType: "application/json",
+    success: function (deleteResponse) {
+      console.log("Delete successful:", deleteResponse);
+
+      //  handle inserts
+      currentCastIds.forEach((actorId) => {
+        $.ajax({
+          url: `https://localhost:7295/api/Movies/InsertCast2Movie/${movieId}/${actorId}`,
+          method: "POST",
+          contentType: "application/json",
+          success: function (insertResponse) {
+            console.log(
+              `Insert successful for actor ${actorId}:`,
+              insertResponse
+            );
+          },
+          error: function (error) {
+            console.error(`Insert failed for actor ${actorId}:`, error);
+          },
+        });
+      });
+
+      $("#castModal").modal("hide");
+      init();
+    },
+    error: function (error) {
+      console.error("Delete failed:", error);
+    },
+  });
+});

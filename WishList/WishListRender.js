@@ -1,6 +1,6 @@
-const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
+// const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
 
-// const API = "https://localhost:7295/api/User/wishList";
+const API = "https://localhost:7295/api/User/wishList";
 
 const userinfo = JSON.parse(localStorage.getItem("UserData"));
 
@@ -18,9 +18,7 @@ $(document).ready(() => {
 
   //handling the user section in the menu
   const userSection = $("#userSection");
-  const UserData = JSON.parse(localStorage.getItem("UserData"));
-
-  const username = UserData.username || "User"; // Get username if stored
+  const username = userinfo.username || "User"; // Get username if stored
 
   userSection.html(`
     <div class="d-flex align-items-center">
@@ -31,7 +29,6 @@ $(document).ready(() => {
 });
 
 const render = (mPackage) => {
-  wishList = mPackage;
   let str = ``;
   for (let i = 0; i < mPackage.length; i++) {
     str += `<div class="card-container">
@@ -46,6 +43,7 @@ const render = (mPackage) => {
       <div class="card_info">
         <span class="card_category">${mPackage[i].language}</span>
         <h3 class="card_tittle">${mPackage[i].title}</h3>
+          <button id="${mPackage[i].id}" class="button-remove" >Remove</button>
         </a>
       </div>
     </div>
@@ -58,6 +56,16 @@ const successCallBack = (mPackage) => {
   render(mPackage);
 };
 
+const removeSuccessCallBack = (mPackage) => {
+  ajaxCall(
+    "GET",
+    API + `/${userinfo.userId}`,
+    null,
+    successCallBack,
+    errorCallBack
+  );
+};
+
 const errorCallBack = (err) => {
   console.log("Error:", err.responseJSON || err.statusText);
 };
@@ -66,3 +74,14 @@ function logout() {
   localStorage.clear();
   window.location.href = "../HomePage/Login.html";
 }
+
+$(document).on("click", ".button-remove", function (e) {
+  let movieid = console.log(e.target.id);
+  ajaxCall(
+    "DELETE",
+    API + `/${userinfo.userId}` + `/${e.target.id}`,
+    null,
+    removeSuccessCallBack,
+    errorCallBack
+  );
+});
