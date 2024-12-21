@@ -32,7 +32,7 @@ function renderUsers(users) {
                   <h6 class="mb-0">${user.userName}</h6>
                   <small class="text-muted">${user.email}</small>
               </div>
-              <span class="badge bg-primary rounded-pill" id="wishlist-count-${user.id}">0</span>
+              <span class="badge bg-primary rounded-pill" id="wishlist-count-${user.id}">${user.wishListCount}</span>
           </button>
       `
     )
@@ -87,9 +87,6 @@ function renderWishlist(wishlist) {
     .join("");
 
   $("#wishlistContainer").html(wishlistItems);
-
-  // Update wishlist count badge
-  $(`#wishlist-count-${userId}`).text(wishlist.length);
 }
 
 function errorCallback(error) {

@@ -61,13 +61,14 @@ const successCallBack = (mPackage) => {
   // render(mPackage);
   console.log(mPackage.length);
   if (mPackage.length == 0) {
-    let str = `<br /><br /><h3 style="color: gray; text-align: center">
-  Seems like your wish list is emty
-</h3>
-<br />
-<a href="../HomePage/index.html" style="text-align: center"
-  >Add movie here</a
->`;
+    let str = ` <div style="color: gray; text-align: center">
+      <br /><br />
+      <h3>Seems like your wish list is emty</h3>
+      <br />
+      <a href="../HomePage/index.html" style="text-align: center"
+        >Add movie here</a
+      >
+    </div>`;
     $("#phWish").html(str);
   } else {
     render(mPackage);
