@@ -1,6 +1,6 @@
-// const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
+const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
 
-const API = "https://localhost:7295/api/User/wishList";
+// const API = "https://localhost:7295/api/User/wishList";
 
 const userinfo = JSON.parse(localStorage.getItem("UserData"));
 
@@ -25,7 +25,7 @@ $(document).ready(() => {
       <span class="nav-link">Welcome ${username}</span>
       ${
         username == "admin"
-          ? `<a class="nav-link " href="../admin.html">Console</a>`
+          ? `<a class="nav-link " href="../admin/admin.html">Console</a>`
           : ""
       }
       <a class="nav-link " href="#" onclick="logout()">Logout</a>

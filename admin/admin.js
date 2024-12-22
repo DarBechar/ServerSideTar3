@@ -1,4 +1,4 @@
-const API_BASE = "https://localhost:7295/api";
+const API_BASE = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User";
 
 $(document).ready(() => {
   // Check if admin is logged in
@@ -6,18 +6,28 @@ $(document).ready(() => {
     window.location.href = "../HomePage/Login.html";
     return;
   }
+  const userSection = $("#userSection");
+  const UserData = JSON.parse(localStorage.getItem("UserData"));
+
+  const username = UserData.username || "User"; // Get username if stored
+
+  userSection.html(`
+    <div class="d-flex align-items-center">
+      <span class="nav-link">Welcome ${username}</span>
+      ${
+        username == "admin"
+          ? `<a class="nav-link " href="../admin/admin.html">Console</a>`
+          : ""
+      }
+      <a class="nav-link " href="#" onclick="logout()">Logout</a>
+    </div>
+  `);
 
   loadUsers();
 });
 
 function loadUsers() {
-  ajaxCall(
-    "GET",
-    `https://localhost:7295/api/User`,
-    null,
-    renderUsers,
-    errorCallback
-  );
+  ajaxCall("GET", API_BASE, null, renderUsers, errorCallback);
 }
 
 function renderUsers(users) {
@@ -51,7 +61,7 @@ function loadUserWishlist(userId, username) {
 
   ajaxCall(
     "GET",
-    `${API_BASE}/User/wishList/${userId}`,
+    `https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList/${userId}`,
     null,
     renderWishlist,
     errorCallback
@@ -94,4 +104,7 @@ function errorCallback(error) {
   alert("An error occurred. Please try again.");
 }
 
-// Your existing ajaxCall function here
+function logout() {
+  localStorage.clear();
+  window.location.href = "../HomePage/Login.html";
+}

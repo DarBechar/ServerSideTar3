@@ -1,10 +1,10 @@
-// const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies";
-// const WishListAPI =
-//   "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
+const API = "https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/Movies";
 
-const API = "https://localhost:7295/api/Movies";
+const WishListAPI ="https://proj.ruppin.ac.il/bgroup4/test2/tar1/api/User/wishList";
 
-const WishListAPI = "https://localhost:7295/api/User/wishList";
+// const API = "https://localhost:7295/api/Movies";
+
+// const WishListAPI = "https://localhost:7295/api/User/wishList";
 
 $(document).ready(() => {
   //checking if the user is loggeed in or not.

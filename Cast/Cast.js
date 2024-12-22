@@ -18,7 +18,7 @@ $(document).ready(() => {
       <span class="nav-link">Welcome ${username}</span>
       ${
         username == "admin"
-          ? `<a class="nav-link " href="../admin.html">Console</a>`
+          ? `<a class="nav-link " href="../admin/admin.html">Console</a>`
           : ""
       }
       <a class="nav-link " href="#" onclick="logout()">Logout</a>
